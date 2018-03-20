@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/subs', function (){
+
+    if (Gate::allows('subs-only', Auth::user())) {
+        return view('subs');
+    }else{
+        return 'sorry you are not subs';
+    }
+
+});
